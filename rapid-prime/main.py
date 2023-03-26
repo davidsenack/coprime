@@ -19,6 +19,7 @@
 
 import argparse
 import gmpy2
+from multiprocessing import Pool
 
 from miller_rabin import miller_rabin_test
 
@@ -37,9 +38,11 @@ def main():
     if args.mersenne:
         args.number = 2 ** args.mersenne - 1
 
+    pool = Pool()
+
     # Convert the number to a gmpy2 mpz object and test it
     candidate_num = gmpy2.mpz(args.number)
-    is_prime = miller_rabin_test(candidate_num, args.iterations)
+    is_prime = pool.map(miller_rabin_test, [candidate_num] * args.iterations)
 
     # Print the result based on whether the user specified an exponent
     if args.mersenne:

@@ -21,7 +21,7 @@ import random
 import gmpy2
 
 
-def miller_rabin_test(n, k=10):
+def miller_rabin_test(n, k=1):
     if n <= 1 or n == 4:
         return False
     if n <= 3:
