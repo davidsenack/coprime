@@ -35,11 +35,13 @@ def miller_rabin_test(n, k=10):
         r += 1
 
     # Witness loop
+    @par # <--- Codon compiler decorator
     for _ in range(k):
         a = gmpy2.mpz(random.randint(2, n - 2))
         x = gmpy2.powmod(a, d, n)
         if x == 1 or x == n - 1:
             continue
+        @par # <--- Codon compiler decorator
         for _ in range(r - 1):
             x = gmpy2.powmod(x, 2, n)
             if x == n - 1:
