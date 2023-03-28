@@ -52,7 +52,7 @@ def miller_rabin(n, k):
     @par # <-- Parallelize this loop with Codon
     for _ in range(k):
         a = random.randrange(2, n - 1)
-        a = Int[width](a)
+        a = Int[width](a) # Convert to n-bit integer
         x = pow(a, s, n)
         if x == one or x == n - one:
             continue
