@@ -28,26 +28,39 @@ def miller_rabin(n, k):
     for justification
     '''
 
+    # Convert number to n-bit integer for use with Codon
+    width = len(n)
+    n = Int[width](n)
+
+    # Set up constants to corresponding n-bit width
+    zero = Int[width](0)
+    one = Int[width](1)
+    two = Int[width](2)
+
     # If number is even, it's a composite number
-    if n == 2:
+    if n == two:
         return True
-    if n % 2 == 0:
+    if n % two == zero:
         return False
 
-    r, s = 0, n - 1
-    while s % 2 == 0:
-        r += 1
-        s //= 2
-    @par
+    # Set up variables for Miller-Rabin test
+    r, s = zero, n - one
+    while s % two == zero:
+        r += one
+        s //= two
+    
+    @par # <-- Parallelize this loop with Codon
     for _ in range(k):
         a = random.randrange(2, n - 1)
+        a = Int[width](a)
         x = pow(a, s, n)
-        if x == 1 or x == n - 1:
+        if x == one or x == n - one:
             continue
-        @par
-        for _ in range(r - 1):
-            x = pow(x, 2, n)
-            if x == n - 1:
+        
+        @par # <-- Parallelize this loop with Codon
+        for _ in range(r - one):
+            x = pow(x, two, n)
+            if x == n - one:
                 break
         else:
             return False
