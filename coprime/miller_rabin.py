@@ -28,7 +28,7 @@ def miller_rabin(n, k):
     for justification
     '''
 
-    # Convert number to n-bit integer for use with Codon
+    # Convert input number to n-bit integer for use with Codon
     width = len(n)
     n = Int[width](n)
 
