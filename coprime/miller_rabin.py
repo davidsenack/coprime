@@ -19,8 +19,8 @@
 
 import random
 
-def miller_rabin(n, k):
 
+def miller_rabin(n, k):
     '''
     Implementation uses the Miller-Rabin Primality Test
     The optimal number of rounds for this test is 40
@@ -45,19 +45,21 @@ def miller_rabin(n, k):
 
     # Set up variables for Miller-Rabin test
     r, s = zero, n - one
+
+    # Find r and s such that n - 1 = 2^r * s
     while s % two == zero:
         r += one
         s //= two
-    
-    @par # <-- Parallelize this loop with Codon
+
+    @par  # <-- Parallelize this loop with Codon
     for _ in range(k):
         a = random.randrange(2, n - 1)
-        a = Int[width](a) # Convert to n-bit integer
+        a = Int[width](a)  # Convert to n-bit integer
         x = pow(a, s, n)
         if x == one or x == n - one:
             continue
-        
-        @par # <-- Parallelize this loop with Codon
+
+        @par  # <-- Parallelize this loop with Codon
         for _ in range(r - one):
             x = pow(x, two, n)
             if x == n - one:
